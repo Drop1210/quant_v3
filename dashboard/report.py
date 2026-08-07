@@ -58,7 +58,7 @@ def generate_mobile_html(summary: Dict, out_path: str) -> str:
     if sp_rows:
         sp_panel = f"""
 <div class="panel">
-  <div class="pt">小资金 Top {len(small)}（1手金额 = 收盘价×100）</div>
+  <div class="pt">跟单建议 Top {len(small)}（每手金额 = 收盘价×100）</div>
   <table>
     <tr><th>股票</th><th>代码</th><th>收盘</th><th>行业</th><th>PE</th><th>市值</th><th>1手</th></tr>
     {sp_rows}

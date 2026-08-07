@@ -119,11 +119,12 @@ def latest_picks(scores, piped, daily, sector, pool_by_month,
 
 
 def small_capital_picks(picks: list, daily: pd.DataFrame,
-                        top_n: int = 3, per_stock_budget: float = 1500.0,
+                        top_n: int = 5, per_stock_budget=None,
                         min_amount: float = 3e7) -> list:
     """
-    小资金版：从全量选股里挑能"一手买得起 + 流动性够 + 行业分散"的 Top N
-    per_stock_budget 默认 1500 = 练手仓 5000 元分 3 只
+    跟单建议：从全量选股里挑"流动性够 + 行业分散"的 Top N
+    不做价格限制——买不买得起由用户自己判断（每只显示每手金额）
+    per_stock_budget 传数值时才会做价格过滤（默认不过滤）
     """
     d = daily.copy()
     d["code"] = d["code"].astype(str)
@@ -140,7 +141,7 @@ def small_capital_picks(picks: list, daily: pd.DataFrame,
         amount = float(last.loc[code, "amount"]) if "amount" in last.columns else 0.0
         if amount < min_amount:              # 流动性不足
             continue
-        if close * 100 > per_stock_budget:   # 一手都买不起
+        if per_stock_budget is not None and close * 100 > per_stock_budget:
             continue
         cand.append({**p, "close": round(close, 2),
                      "amount_wan": round(amount / 1e4)})
@@ -289,9 +290,8 @@ def main() -> None:
     small = small_capital_picks(
         picks, daily,
         top_n=cfg.portfolio.small_capital_top,
-        per_stock_budget=cfg.portfolio.small_capital_budget / max(1, cfg.portfolio.small_capital_top),
         min_amount=cfg.portfolio.small_min_amount)
-    log(f"小资金 Top {len(small)}: {[p['name'] for p in small]}")
+    log(f"跟单建议 Top {len(small)}: {[p['name'] for p in small]}")
     tracking.record_picks(picks, OUT_DIR)
     log("评估历史选股表现...")
     weekly = tracking.evaluate_picks(daily, bench300, index500, OUT_DIR)

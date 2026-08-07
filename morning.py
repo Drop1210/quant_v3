@@ -33,12 +33,13 @@ def main() -> None:
     sp = s.get("small_picks", [])
     if sp:
         lines.append("")
-        lines.append(f"小资金 Top {len(sp)}：")
+        lines.append(f"跟单建议 Top {len(sp)}：")
         for p in sp:
             pe = p.get("pe")
             pe_txt = f" PE{pe}" if pe else ""
+            hand = f"每手{p.get('close',0)*100:.0f}元" if p.get("close") else ""
             lines.append(f"· {p.get('name','')}({p.get('code','')}) "
-                         f"收盘{p.get('close','-')}{pe_txt} {p.get('industry','')}")
+                         f"收盘{p.get('close','-')}{pe_txt} {p.get('industry','')} {hand}")
     lines.append("")
     lines.append("昨日选股结果，仅供参考，不构成投资建议")
     push.push_text("早间晨报", "\n".join(lines))

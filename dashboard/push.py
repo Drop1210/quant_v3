@@ -187,12 +187,13 @@ def build_text(summary: Dict) -> str:
     sp = summary.get("small_picks", [])
     if sp:
         lines.append("")
-        lines.append(f"小资金 Top {len(sp)}（每手约{sp[0].get('close',0)*100:.0f}元起）：")
+        lines.append(f"跟单建议 Top {len(sp)}：")
         for p in sp:
             pe = p.get("pe")
             pe_txt = f" PE{pe}" if pe else ""
+            hand = f"每手{p.get('close',0)*100:.0f}元" if p.get("close") else ""
             lines.append(f"· {p.get('name','')}({p.get('code','')}) "
-                         f"收盘{p.get('close','-')}{pe_txt} {p.get('industry','')}")
+                         f"收盘{p.get('close','-')}{pe_txt} {p.get('industry','')} {hand}")
     bt = summary.get("backtest", {})
     if bt:
         lines.append("")

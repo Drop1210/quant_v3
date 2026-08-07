@@ -603,6 +603,45 @@
   },
   "small_picks": [
     {
+      "rank": 1,
+      "code": "300390",
+      "name": "天华新能",
+      "score": 1.594,
+      "close": 59.54,
+      "pct": -0.68,
+      "industry": "电力设备",
+      "pe": null,
+      "pb": null,
+      "mv_yi": null,
+      "amount_wan": 187705
+    },
+    {
+      "rank": 2,
+      "code": "300476",
+      "name": "胜宏科技",
+      "score": 1.394,
+      "close": 250.15,
+      "pct": 5.84,
+      "industry": "电子",
+      "pe": null,
+      "pb": null,
+      "mv_yi": null,
+      "amount_wan": 1801225
+    },
+    {
+      "rank": 5,
+      "code": "001203",
+      "name": "大中矿业",
+      "score": 1.231,
+      "close": 27.7,
+      "pct": -1.14,
+      "industry": "钢铁",
+      "pe": null,
+      "pb": null,
+      "mv_yi": null,
+      "amount_wan": 58165
+    },
+    {
       "rank": 6,
       "code": "600598",
       "name": "北大荒",
@@ -627,19 +666,6 @@
       "pb": null,
       "mv_yi": null,
       "amount_wan": 15644
-    },
-    {
-      "rank": 29,
-      "code": "600115",
-      "name": "中国东航",
-      "score": 0.845,
-      "close": 3.74,
-      "pct": -1.06,
-      "industry": "交通运输",
-      "pe": null,
-      "pb": null,
-      "mv_yi": null,
-      "amount_wan": 45682
     }
   ],
   "weekly": [],
