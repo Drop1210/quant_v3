@@ -56,6 +56,17 @@ def log(msg: str) -> None:
         pass
 
 
+def is_trading_day() -> bool:
+    """今天是否 A 股交易日（交易日历查不到时默认是，保证不误伤）"""
+    try:
+        import akshare as ak
+        cal = ak.tool_trade_date_hist_sina()
+        dates = set(pd.to_datetime(cal["trade_date"]).dt.date)
+        return datetime.now().date() in dates
+    except Exception:
+        return True
+
+
 def _bootstrap_legacy(engine: DataEngine, name: str, legacy_name: str):
     """本地开发：缺失时从旧系统缓存复制（服务器/GitHub 上不存在则跳过）"""
     df = engine._load(name)
@@ -119,6 +130,10 @@ def main() -> None:
     start_env = os.environ.get("QUANT_START_DATE", "")
     if start_env:
         cfg.data.start_date = start_env
+
+    if os.environ.get("GITHUB_EVENT_NAME") == "schedule" and not is_trading_day():
+        log("非交易日（节假日），跳过本次自动运行")
+        return
 
     engine = DataEngine()
     daily = engine.get_price()

@@ -61,3 +61,11 @@ jobs:
       - name: deploy
         if: always()
         uses: actions/deploy-pages@v4
+
+      - name: notify-failure
+        if: failure()
+        env:
+          WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
+        run: |
+          curl -s -X POST "$WECHAT_WEBHOOK" -H 'Content-Type: application/json' \
+            -d '{"msgtype":"text","text":{"content":"⚠ 量化系统今日运行失败，请到 GitHub Actions 查看日志"}}' || true
