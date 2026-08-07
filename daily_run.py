@@ -38,6 +38,7 @@ from backtest.engine import run_backtest
 from backtest.benchmark import load_index_benchmark, filtered_pool_benchmark
 from dashboard.report import generate_mobile_html
 from dashboard import push
+from dashboard import tracking
 
 OUT_DIR = os.path.join(PROJECT_ROOT, "output")
 LOG_FILE = os.path.join(OUT_DIR, "daily_run.log")
@@ -175,9 +176,21 @@ def main() -> None:
     bench300 = load_index_benchmark(engine, PROJECT_ROOT, LEGACY_DIR)
     if bench300 is None or len(bench300) == 0:
         log("拉取沪深300指数数据...")
-        bench300 = ff.fetch_index("000300", cfg.data.start_date)
+        try:
+            bench300 = ff.fetch_index("000300", cfg.data.start_date)
+        except Exception as e:
+            log(f"[WARN] 沪深300拉取失败: {e}")
         if bench300 is not None and len(bench300) > 0:
             engine._save("index.parquet", bench300)
+    index500 = engine._load("index500.parquet")
+    if index500 is None or len(index500) == 0:
+        log("拉取中证500指数数据...")
+        try:
+            index500 = ff.fetch_index("000905", cfg.data.start_date)
+        except Exception as e:
+            log(f"[WARN] 中证500拉取失败: {e}")
+        if index500 is not None and len(index500) > 0:
+            engine._save("index500.parquet", index500)
     pool_bench = filtered_pool_benchmark(daily, pool_by_month, months)
     bt = run_backtest(daily, pf, benchmark=bench300,
                       initial_capital=cfg.backtest.initial_capital,
@@ -197,6 +210,11 @@ def main() -> None:
     log("生成今日选股...")
     picks = latest_picks(scores, piped, daily, sector, pool_by_month,
                          args.top, use_quality=not args.no_quality)
+    tracking.record_picks(picks, OUT_DIR)
+    log("评估历史选股表现...")
+    weekly = tracking.evaluate_picks(daily, bench300, index500, OUT_DIR)
+    if weekly:
+        log(f"本周自检批次: {[w['pick_date'] for w in weekly]}")
     factors = []
     for _, r in rep.head(12).iterrows():
         factors.append({
@@ -217,6 +235,7 @@ def main() -> None:
         "factors": factors,
         "weights": {FACTOR_DEFS.get(k, k): round(float(w), 3)
                     for k, w in weights.items()},
+        "weekly": weekly,
         "error": None,
     }
     os.makedirs(OUT_DIR, exist_ok=True)
@@ -232,6 +251,8 @@ def main() -> None:
         title = f"今日量化选股 {datetime.now():%m-%d}"
         ok = push.push_text(title, push.build_text(summary))
         log(f"推送结果: {ok if ok else '未配置通道'}")
+        for w in weekly:
+            push.push_text("每周选股自检", tracking.format_weekly(w))
 
 
 if __name__ == "__main__":

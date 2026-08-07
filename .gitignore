@@ -20,9 +20,11 @@ output/*.err
 !data_cache/financial.parquet
 !data_cache/sector.parquet
 !data_cache/index.parquet
+!data_cache/index500.parquet
 !output/mobile_report.html
 !output/index.html
 !output/daily_summary.json
 !output/latest_picks.csv
+!output/pick_history.csv
 !output/factor_report_v3.txt
 !output/backtest_report_v3.txt

@@ -54,6 +54,25 @@ def generate_mobile_html(summary: Dict, out_path: str) -> str:
     if not fac_rows:
         fac_rows = "<tr><td colspan='4' class='empty'>暂无因子数据</td></tr>"
 
+    weekly = summary.get("weekly", [])
+    wk_rows = ""
+    for w in weekly:
+        ex300 = f"{w['excess300']:+.2f}%" if w.get("excess300") is not None else "-"
+        ex500 = f"{w['excess500']:+.2f}%" if w.get("excess500") is not None else "-"
+        wk_rows += (f"<tr><td>{w['pick_date']}</td><td>{w['n']}只</td>"
+                    f"<td>{w['avg_return']:+.2f}%</td><td>{w['win_rate']:.0f}%</td>"
+                    f"<td>{ex300}</td><td>{ex500}</td></tr>")
+    wk_panel = ""
+    if wk_rows:
+        wk_panel = f"""
+<div class="panel">
+  <div class="pt">选股跟踪（到期批次实际表现）</div>
+  <table>
+    <tr><th>选股日</th><th>数量</th><th>平均收益</th><th>上涨比</th><th>vs沪深300</th><th>vs中证500</th></tr>
+    {wk_rows}
+  </table>
+</div>"""
+
     w_rows = "".join(
         f"<span class='chip'>{k} {v * 100:.0f}%</span>" for k, v in weights.items())
 
@@ -118,6 +137,7 @@ tr:last-child td {{ border-bottom:none; }}
     {card("vs池基准", f"{pb.get('excess_return','-')}%", f"IR {pb.get('info_ratio','-')}")}
   </div>
 </div>
+{wk_panel}
 <div class="panel">
   <div class="pt">因子有效性 Top 12（IC / t 值）</div>
   <table>

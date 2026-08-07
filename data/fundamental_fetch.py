@@ -105,17 +105,35 @@ def fetch_current_valuation() -> pd.DataFrame:
 
 def fetch_index(symbol: str = "000300",
                 start_date: str = "20180101") -> pd.DataFrame:
-    """指数日线，返回 date/close"""
+    """指数日线，返回 date/close（东财 -> 新浪 双源容错）"""
     import akshare as ak
-    df = ak.index_zh_a_hist(symbol=symbol, period="daily",
-                            start_date=start_date,
-                            end_date=datetime.now().strftime("%Y%m%d"))
-    if df is None or len(df) == 0:
-        return pd.DataFrame()
-    cols = {str(c).strip(): c for c in df.columns}
-    out = pd.DataFrame({
-        "date": pd.to_datetime(df[cols["日期"]]),
-        "close": pd.to_numeric(df[cols["收盘"]], errors="coerce"),
-    })
-    out["code"] = symbol
-    return out[["code", "date", "close"]].dropna(subset=["date", "close"])
+    end = datetime.now().strftime("%Y%m%d")
+    try:
+        df = ak.index_zh_a_hist(symbol=symbol, period="daily",
+                                start_date=start_date, end_date=end)
+        if df is not None and len(df) > 0:
+            cols = {str(c).strip(): c for c in df.columns}
+            out = pd.DataFrame({
+                "date": pd.to_datetime(df[cols["日期"]]),
+                "close": pd.to_numeric(df[cols["收盘"]], errors="coerce"),
+            })
+            out["code"] = symbol
+            return out[["code", "date", "close"]].dropna(subset=["date", "close"])
+    except Exception:
+        pass
+    # 新浪备用
+    prefix = "sh" if str(symbol).startswith(("000", "9")) else "sz"
+    try:
+        df = ak.stock_zh_index_daily(symbol=f"{prefix}{symbol}")
+        if df is not None and len(df) > 0:
+            df["date"] = pd.to_datetime(df["date"])
+            df = df[df["date"] >= pd.Timestamp(start_date)]
+            out = pd.DataFrame({
+                "date": df["date"],
+                "close": pd.to_numeric(df["close"], errors="coerce"),
+            })
+            out["code"] = symbol
+            return out[["code", "date", "close"]].dropna(subset=["date", "close"])
+    except Exception:
+        pass
+    return pd.DataFrame()
