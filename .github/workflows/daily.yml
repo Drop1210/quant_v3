@@ -1,0 +1,64 @@
+name: 每日量化
+
+on:
+  schedule:
+    - cron: "0 12 * * 1-5"   # 北京时间 20:00（GitHub 定时可能延迟，属正常）
+  workflow_dispatch:          # 手机/网页上可手动触发
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: quant-daily
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: 安装依赖
+        run: pip install -r requirements.txt
+
+      - name: 运行每日量化流水线
+        env:
+          QUANT_START_DATE: "20220101"
+          WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        run: python daily_run.py --update
+
+      - name: 提交报告与小型缓存
+        run: |
+          git config user.name "quant-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "daily update $(date -u +%F)"
+            git push
+          fi
+
+      - name: 部署手机网页（GitHub Pages）
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: 上传页面
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: output
+
+      - name: 发布
+        if: always()
+        id: deploy
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,28 @@
+__pycache__/
+*.pyc
+*.log
+push_settings.json
+data_cache/index_constitution_repo/
+
+# 大数据文件不进 Git（GitHub 上每次全新拉取，无需历史缓存）
+data_cache/daily.parquet
+data_cache/valuation.parquet
+data_cache/panel_piped_v3.parquet
+data_cache/scores_v3.parquet
+data_cache/ic_long_v3.parquet
+
+# 只提交报告，不提交中间产物
+output/*.parquet
+output/*.csv
+output/*.err
+
+# 保留
+!data_cache/financial.parquet
+!data_cache/sector.parquet
+!data_cache/index.parquet
+!output/mobile_report.html
+!output/index.html
+!output/daily_summary.json
+!output/latest_picks.csv
+!output/factor_report_v3.txt
+!output/backtest_report_v3.txt

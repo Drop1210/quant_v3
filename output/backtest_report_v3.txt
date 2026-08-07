@@ -1,0 +1,24 @@
+=== QuantV3 回测报告（40 只 / 点对点成分 / 真实成交约束）===
+
+  total_return: 84.34
+  annual_return: 8.44
+  annual_vol: 15.95
+  sharpe: 0.529
+  max_drawdown: -28.94
+  calmar: 0.292
+  monthly_win_rate: 53.2
+  benchmark_return: 41.34
+  excess_return: 43.0
+  info_ratio: 0.312
+  avg_holdings: 40.0
+  months: 94
+  trades: 1356
+  turnover_avg: 34.4
+  limit_up_skip: 2
+  limit_down_skip: 6
+  suspend_skip: 3
+
+=== 对等权池基准 ===
+  等权池基准收益: 182.95%
+  超额: -98.61%
+  InfoRatio: -0.259

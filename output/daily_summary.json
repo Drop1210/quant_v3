@@ -1,0 +1,485 @@
+{
+  "date": "2026-08-07",
+  "data_date": "2026-08-06",
+  "picks": [
+    {
+      "rank": 1,
+      "code": "300390",
+      "name": "天华新能",
+      "score": 1.594,
+      "close": 59.54,
+      "pct": -0.68,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 2,
+      "code": "300476",
+      "name": "胜宏科技",
+      "score": 1.394,
+      "close": 250.15,
+      "pct": 5.84,
+      "industry": "电子"
+    },
+    {
+      "rank": 3,
+      "code": "001309",
+      "name": "德明利",
+      "score": 1.391,
+      "close": 388.25,
+      "pct": 0.52,
+      "industry": "电子"
+    },
+    {
+      "rank": 4,
+      "code": "300857",
+      "name": "协创数据",
+      "score": 1.258,
+      "close": 250.11,
+      "pct": -0.69,
+      "industry": "电子"
+    },
+    {
+      "rank": 5,
+      "code": "001203",
+      "name": "大中矿业",
+      "score": 1.231,
+      "close": 27.7,
+      "pct": -1.14,
+      "industry": "钢铁"
+    },
+    {
+      "rank": 6,
+      "code": "600598",
+      "name": "北大荒",
+      "score": 1.226,
+      "close": 12.2,
+      "pct": 0.25,
+      "industry": "农林牧渔"
+    },
+    {
+      "rank": 7,
+      "code": "002709",
+      "name": "天赐材料",
+      "score": 1.204,
+      "close": 39.25,
+      "pct": 0.51,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 8,
+      "code": "300475",
+      "name": "香农芯创",
+      "score": 1.199,
+      "close": 152.59,
+      "pct": 0.82,
+      "industry": "电子"
+    },
+    {
+      "rank": 9,
+      "code": "301358",
+      "name": "湖南裕能",
+      "score": 1.161,
+      "close": 65.15,
+      "pct": -1.15,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 10,
+      "code": "600816",
+      "name": "建元信托",
+      "score": 1.071,
+      "close": 2.54,
+      "pct": -1.55,
+      "industry": "非银金融"
+    },
+    {
+      "rank": 11,
+      "code": "001389",
+      "name": "广合科技",
+      "score": 1.068,
+      "close": 160.77,
+      "pct": 0.28,
+      "industry": "电子"
+    },
+    {
+      "rank": 12,
+      "code": "603699",
+      "name": "纽威股份",
+      "score": 1.067,
+      "close": 51.78,
+      "pct": 0.0,
+      "industry": "机械设备"
+    },
+    {
+      "rank": 13,
+      "code": "000988",
+      "name": "华工科技",
+      "score": 1.062,
+      "close": 103.01,
+      "pct": 2.57,
+      "industry": "机械设备"
+    },
+    {
+      "rank": 14,
+      "code": "600989",
+      "name": "宝丰能源",
+      "score": 1.052,
+      "close": 23.47,
+      "pct": 1.43,
+      "industry": "基础化工"
+    },
+    {
+      "rank": 15,
+      "code": "605117",
+      "name": "德业股份",
+      "score": 1.048,
+      "close": 83.5,
+      "pct": -0.31,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 16,
+      "code": "300953",
+      "name": "震裕科技",
+      "score": 1.04,
+      "close": 101.3,
+      "pct": -0.01,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 17,
+      "code": "301308",
+      "name": "江波龙",
+      "score": 1.024,
+      "close": 366.33,
+      "pct": 0.39,
+      "industry": "电子"
+    },
+    {
+      "rank": 18,
+      "code": "000792",
+      "name": "盐湖股份",
+      "score": 1.008,
+      "close": 28.53,
+      "pct": 0.88,
+      "industry": "基础化工"
+    },
+    {
+      "rank": 19,
+      "code": "300395",
+      "name": "菲利华",
+      "score": 0.975,
+      "close": 81.83,
+      "pct": 2.36,
+      "industry": "国防军工"
+    },
+    {
+      "rank": 20,
+      "code": "000062",
+      "name": "深圳华强",
+      "score": 0.971,
+      "close": 22.99,
+      "pct": -1.2,
+      "industry": "电子"
+    },
+    {
+      "rank": 21,
+      "code": "002261",
+      "name": "拓维信息",
+      "score": 0.963,
+      "close": 27.4,
+      "pct": -1.47,
+      "industry": "计算机"
+    },
+    {
+      "rank": 22,
+      "code": "600602",
+      "name": "云赛智联",
+      "score": 0.962,
+      "close": 18.14,
+      "pct": -2.21,
+      "industry": "计算机"
+    },
+    {
+      "rank": 23,
+      "code": "300548",
+      "name": "长芯博创",
+      "score": 0.947,
+      "close": 171.0,
+      "pct": 7.26,
+      "industry": "通信"
+    },
+    {
+      "rank": 24,
+      "code": "300394",
+      "name": "天孚通信",
+      "score": 0.904,
+      "close": 225.28,
+      "pct": 3.89,
+      "industry": "通信"
+    },
+    {
+      "rank": 25,
+      "code": "600026",
+      "name": "中远海能",
+      "score": 0.891,
+      "close": 17.46,
+      "pct": -2.29,
+      "industry": "交通运输"
+    },
+    {
+      "rank": 26,
+      "code": "002558",
+      "name": "巨人网络",
+      "score": 0.877,
+      "close": 29.26,
+      "pct": -2.69,
+      "industry": "传媒"
+    },
+    {
+      "rank": 27,
+      "code": "603308",
+      "name": "应流股份",
+      "score": 0.864,
+      "close": 48.07,
+      "pct": 0.8,
+      "industry": "机械设备"
+    },
+    {
+      "rank": 28,
+      "code": "000408",
+      "name": "藏格矿业",
+      "score": 0.85,
+      "close": 86.79,
+      "pct": 0.25,
+      "industry": "基础化工"
+    },
+    {
+      "rank": 29,
+      "code": "600115",
+      "name": "中国东航",
+      "score": 0.845,
+      "close": 3.74,
+      "pct": -1.06,
+      "industry": "交通运输"
+    },
+    {
+      "rank": 30,
+      "code": "600346",
+      "name": "恒力石化",
+      "score": 0.838,
+      "close": 17.45,
+      "pct": 1.34,
+      "industry": "石油石化"
+    },
+    {
+      "rank": 31,
+      "code": "002318",
+      "name": "久立特材",
+      "score": 0.823,
+      "close": 19.89,
+      "pct": -2.16,
+      "industry": "钢铁"
+    },
+    {
+      "rank": 32,
+      "code": "601336",
+      "name": "新华保险",
+      "score": 0.789,
+      "close": 60.37,
+      "pct": -1.39,
+      "industry": "非银金融"
+    },
+    {
+      "rank": 33,
+      "code": "002402",
+      "name": "和而泰",
+      "score": 0.768,
+      "close": 21.33,
+      "pct": -1.48,
+      "industry": "电子"
+    },
+    {
+      "rank": 34,
+      "code": "000034",
+      "name": "神州数码",
+      "score": 0.759,
+      "close": 25.57,
+      "pct": -1.27,
+      "industry": "计算机"
+    },
+    {
+      "rank": 35,
+      "code": "600601",
+      "name": "方正科技",
+      "score": 0.755,
+      "close": 11.7,
+      "pct": 9.96,
+      "industry": "电子"
+    },
+    {
+      "rank": 36,
+      "code": "300442",
+      "name": "润泽科技",
+      "score": 0.747,
+      "close": 68.8,
+      "pct": -1.6,
+      "industry": "通信"
+    },
+    {
+      "rank": 37,
+      "code": "601872",
+      "name": "招商轮船",
+      "score": 0.742,
+      "close": 17.88,
+      "pct": -1.22,
+      "industry": "交通运输"
+    },
+    {
+      "rank": 38,
+      "code": "600208",
+      "name": "衢州发展",
+      "score": 0.728,
+      "close": 2.95,
+      "pct": -1.01,
+      "industry": "房地产"
+    },
+    {
+      "rank": 39,
+      "code": "300432",
+      "name": "富临精工",
+      "score": 0.727,
+      "close": 15.79,
+      "pct": -2.83,
+      "industry": "电力设备"
+    },
+    {
+      "rank": 40,
+      "code": "603119",
+      "name": "浙江荣泰",
+      "score": 0.721,
+      "close": 53.6,
+      "pct": -0.2,
+      "industry": "汽车"
+    }
+  ],
+  "backtest": {
+    "annual_return": 16.06,
+    "sharpe": 0.691,
+    "max_drawdown": -33.84,
+    "monthly_win_rate": 59.6,
+    "benchmark_return": 41.34,
+    "excess_return": 166.48,
+    "info_ratio": 0.903,
+    "total_return": 207.82
+  },
+  "pool_bench": {
+    "benchmark_return": 180.69,
+    "excess_return": 27.13,
+    "info_ratio": 0.086
+  },
+  "factors": [
+    {
+      "factor": "f_vwap_bias20",
+      "name": "VWAP乖离",
+      "ic": -0.0409,
+      "t": -4.27,
+      "win": 33.0,
+      "significant": true
+    },
+    {
+      "factor": "f_turn_std20",
+      "name": "20日换手率波动",
+      "ic": -0.0389,
+      "t": -3.78,
+      "win": 35.9,
+      "significant": true
+    },
+    {
+      "factor": "f_vp_corr20",
+      "name": "量价相关(20)",
+      "ic": -0.0247,
+      "t": -3.4,
+      "win": 36.9,
+      "significant": true
+    },
+    {
+      "factor": "f_turn_ret_corr20",
+      "name": "换手收益相关(20)",
+      "ic": -0.0245,
+      "t": -3.37,
+      "win": 36.9,
+      "significant": true
+    },
+    {
+      "factor": "f_turn20",
+      "name": "20日换手率",
+      "ic": -0.0355,
+      "t": -2.93,
+      "win": 36.9,
+      "significant": true
+    },
+    {
+      "factor": "f_amihud20",
+      "name": "Amihud非流动性",
+      "ic": 0.0222,
+      "t": 2.58,
+      "win": 63.1,
+      "significant": true
+    },
+    {
+      "factor": "f_vol60",
+      "name": "60日波动率",
+      "ic": -0.0332,
+      "t": -2.39,
+      "win": 38.0,
+      "significant": true
+    },
+    {
+      "factor": "f_amt20",
+      "name": "20日成交额(log)",
+      "ic": -0.0295,
+      "t": -2.28,
+      "win": 39.8,
+      "significant": true
+    },
+    {
+      "factor": "f_roe",
+      "name": "ROE",
+      "ic": 0.0192,
+      "t": 2.19,
+      "win": 60.2,
+      "significant": true
+    },
+    {
+      "factor": "f_dist_low20",
+      "name": "距20日低点",
+      "ic": -0.0232,
+      "t": -2.15,
+      "win": 47.6,
+      "significant": true
+    },
+    {
+      "factor": "f_maxret20",
+      "name": "20日最大涨幅",
+      "ic": -0.0216,
+      "t": -2.11,
+      "win": 46.6,
+      "significant": true
+    },
+    {
+      "factor": "f_profit_growth",
+      "name": "净利润同比增速",
+      "ic": 0.0178,
+      "t": 2.05,
+      "win": 54.4,
+      "significant": true
+    }
+  ],
+  "weights": {
+    "60日动量": -0.342,
+    "ROE": 0.337,
+    "5日成交额变化": -0.321
+  },
+  "error": null
+}
