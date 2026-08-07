@@ -1,9 +1,9 @@
-name: 每日量化
+name: daily-quant
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: "0 12 * * 1-5"   # 北京时间 20:00（GitHub 定时可能延迟，属正常）
-  workflow_dispatch:          # 手机/网页上可手动触发
+    - cron: "0 12 * * 1-5"
 
 permissions:
   contents: write
@@ -26,10 +26,10 @@ jobs:
           python-version: "3.11"
           cache: pip
 
-      - name: 安装依赖
+      - name: install
         run: pip install -r requirements.txt
 
-      - name: 运行每日量化流水线
+      - name: run
         env:
           QUANT_START_DATE: "20220101"
           WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
@@ -38,7 +38,7 @@ jobs:
           BARK_KEY: ${{ secrets.BARK_KEY }}
         run: python daily_run.py --update
 
-      - name: 提交报告与小型缓存
+      - name: commit
         run: |
           git config user.name "quant-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -48,17 +48,16 @@ jobs:
             git push
           fi
 
-      - name: 部署手机网页（GitHub Pages）
+      - name: pages
         if: always()
         uses: actions/configure-pages@v5
 
-      - name: 上传页面
+      - name: upload
         if: always()
         uses: actions/upload-pages-artifact@v3
         with:
           path: output
 
-      - name: 发布
+      - name: deploy
         if: always()
-        id: deploy
         uses: actions/deploy-pages@v4
