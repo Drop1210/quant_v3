@@ -1,4 +1,4 @@
-# 手机版部署说明（GitHub 免费方案）
+﻿# 手机版部署说明（Drop1210 专属版）
 
 ## 原理
 
@@ -6,17 +6,25 @@
 更新行情 → 因子检验 → 选股 → 推送到微信 → 更新手机网页。
 手机完全独立，电脑不用开。
 
+## 仓库信息（已为你配好）
+
+- 用户名：Drop1210
+- 邮箱：360950551@qq.com
+- 建议仓库名：quant_v3（私库）
+- 手机网页地址（启用后）：https://drop1210.github.io/quant_v3/
+
 ## 一次性准备（约 20 分钟）
 
 ### 1. 安装 GitHub Desktop（图形界面，免命令）
 
-官网 https://desktop.github.com 下载安装，用你的 GitHub 账号登录。
+官网 https://desktop.github.com 下载安装，用 Drop1210 账号登录。
 
-### 2. 上传代码
+### 2. 发布仓库（代码已在 E:\quant_v3 准备好，只差发布）
 
 1. 打开 GitHub Desktop → File → Add local repository → 选择 `E:\quant_v3` 文件夹
-2. 点 Publish repository → 选 **Private（私库，推荐）** → Publish
-3. 等上传完成（约 1~2 分钟，大数据文件已被自动排除）
+2. 仓库名填 `quant_v3`，点 **Publish repository**
+3. 勾选 **Keep this code private**（私库，推荐）→ Publish
+4. 等上传完成（大数据文件已被自动排除，只有几 MB）
 
 ### 3. 配置推送钥匙（微信收消息用，三选一即可，推荐企业微信）
 
@@ -33,7 +41,7 @@
 ### 4. 打开手机网页（GitHub Pages）
 
 仓库 Settings → Pages → Source 选 **GitHub Actions** → Save。
-网页地址：`https://你的用户名.github.io/仓库名/`
+网页地址：`https://drop1210.github.io/quant_v3/`
 
 ### 5. 手动跑一次
 
@@ -49,6 +57,18 @@
 - 每天 20:00 自动跑，GitHub 定时偶尔延迟 1~2 小时属正常，次日开盘前收到即可
 - 想手动触发：GitHub 手机 App → Actions → Run workflow
 - 想改推送时间：改 `.github/workflows/daily.yml` 里的 cron（UTC 时间 = 北京时间 - 8）
+
+### 企业微信群机器人怎么建（推荐通道，5 分钟）
+
+1. 手机装"企业微信"App，用微信登录（免费注册个人企业，选"企业"身份）
+2. 创建一个群（哪怕只有自己），群名随意，比如"量化提醒"
+3. 群里点右上角"..." → 群机器人 → 添加机器人 → 复制 Webhook 地址
+4. 把完整的 `https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=...` 地址贴到 GitHub 的
+   `WECHAT_WEBHOOK` 密钥里（见第 3 步）
+5. 以后每天收到的选股消息就在这个群里
+
+不会建也没关系，用 Server酱（sct.ftqq.com 用 GitHub 登录拿 SendKey）或 PushPlus 也一样，
+都是通过微信公众号收消息。
 
 ## 常见问题
 
