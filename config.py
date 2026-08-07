@@ -42,7 +42,7 @@ class PortfolioConfig:
     exclude_st: bool = True
     min_listed_days: int = 120              # 排除次新股
     # 小资金版（资金少时的跟单建议）
-    small_capital_top: int = 3              # 建议跟几只
+    small_capital_top: int = 5              # 建议跟几只
     small_capital_budget: float = 5000.0    # 练手仓总预算（元）
     small_min_amount: float = 3e7           # 单只最低成交额（元），过滤流动性差的
 
