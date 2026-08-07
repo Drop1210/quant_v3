@@ -30,15 +30,40 @@ def generate_mobile_html(summary: Dict, out_path: str) -> str:
         pct = p.get("pct")
         pct_txt = f"{pct:+.2f}%" if pct is not None else "-"
         pct_cls = "up" if (pct or 0) >= 0 else "down"
+        sub = str(p.get("code", ""))
+        if p.get("pe"):
+            sub += f" · PE{p['pe']}"
+        if p.get("mv_yi"):
+            sub += f" · {int(p['mv_yi'])}亿"
         pick_rows += (
             f"<tr><td class='rk'>{p['rank']}</td>"
-            f"<td class='nm'>{p.get('name','-')}<span class='cd'>{p.get('code','')}</span></td>"
+            f"<td class='nm'>{p.get('name','-')}<span class='cd'>{sub}</span></td>"
             f"<td class='sc'>{p.get('score', 0):.2f}</td>"
             f"<td class='px'>{p.get('close','-') if p.get('close') else '-'}</td>"
             f"<td class='{pct_cls}'>{pct_txt}</td></tr>"
         )
     if not pick_rows:
         pick_rows = "<tr><td colspan='5' class='empty'>暂无选股结果</td></tr>"
+
+    small = summary.get("small_picks", [])
+    sp_rows = ""
+    for p in small:
+        pe = p.get("pe") or "-"
+        mv = f"{int(p['mv_yi'])}亿" if p.get("mv_yi") else "-"
+        hand = f"{p.get('close',0)*100:.0f}元" if p.get("close") else "-"
+        sp_rows += (f"<tr><td>{p.get('name','')}</td><td>{p.get('code','')}</td>"
+                    f"<td>{p.get('close','-')}</td><td>{p.get('industry','-')}</td>"
+                    f"<td>{pe}</td><td>{mv}</td><td>{hand}</td></tr>")
+    sp_panel = ""
+    if sp_rows:
+        sp_panel = f"""
+<div class="panel">
+  <div class="pt">小资金 Top {len(small)}（1手金额 = 收盘价×100）</div>
+  <table>
+    <tr><th>股票</th><th>代码</th><th>收盘</th><th>行业</th><th>PE</th><th>市值</th><th>1手</th></tr>
+    {sp_rows}
+  </table>
+</div>"""
 
     def card(label, value, sub=""):
         sub_html = f"<div class='cs'>{sub}</div>" if sub else ""
@@ -126,6 +151,7 @@ tr:last-child td {{ border-bottom:none; }}
     {pick_rows}
   </table>
 </div>
+{sp_panel}
 <div class="panel">
   <div class="pt">回测参考（2018 至今，月度调仓）</div>
   <div class="grid">

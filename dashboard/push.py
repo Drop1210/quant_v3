@@ -180,8 +180,19 @@ def build_text(summary: Dict) -> str:
         for p in picks[:10]:
             pct = p.get("pct")
             pct_txt = f" {pct:+.2f}%" if pct is not None else ""
+            pe = p.get("pe")
+            pe_txt = f" PE{pe}" if pe else ""
             lines.append(f"· {p.get('name','')}({p.get('code','')}) "
-                         f"得分{p.get('score',0):.2f}{pct_txt}")
+                         f"得分{p.get('score',0):.2f}{pct_txt}{pe_txt}")
+    sp = summary.get("small_picks", [])
+    if sp:
+        lines.append("")
+        lines.append(f"小资金 Top {len(sp)}（每手约{sp[0].get('close',0)*100:.0f}元起）：")
+        for p in sp:
+            pe = p.get("pe")
+            pe_txt = f" PE{pe}" if pe else ""
+            lines.append(f"· {p.get('name','')}({p.get('code','')}) "
+                         f"收盘{p.get('close','-')}{pe_txt} {p.get('industry','')}")
     bt = summary.get("backtest", {})
     if bt:
         lines.append("")

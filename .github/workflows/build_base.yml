@@ -1,0 +1,35 @@
+name: build-base
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: install
+        run: pip install -r requirements.txt
+
+      - name: build-base
+        run: python scripts/build_base.py
+
+      - name: commit
+        run: |
+          git config user.name "quant-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data_cache/daily.parquet
+          if ! git diff --cached --quiet; then
+            git commit -m "base: rebuild full ever-members snapshot"
+            git push
+          fi

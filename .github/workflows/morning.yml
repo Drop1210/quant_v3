@@ -1,0 +1,24 @@
+name: morning
+
+on:
+  schedule:
+    - cron: "30 23 * * 0-4"   # 北京时间 周一~周五 07:30
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: morning
+        env:
+          WECHAT_WEBHOOK: ${{ secrets.WECHAT_WEBHOOK }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          BARK_KEY: ${{ secrets.BARK_KEY }}
+        run: python morning.py

@@ -118,6 +118,54 @@ def latest_picks(scores, piped, daily, sector, pool_by_month,
     return picks
 
 
+def small_capital_picks(picks: list, daily: pd.DataFrame,
+                        top_n: int = 3, per_stock_budget: float = 1500.0,
+                        min_amount: float = 3e7) -> list:
+    """
+    小资金版：从全量选股里挑能"一手买得起 + 流动性够 + 行业分散"的 Top N
+    per_stock_budget 默认 1500 = 练手仓 5000 元分 3 只
+    """
+    d = daily.copy()
+    d["code"] = d["code"].astype(str)
+    last = d.sort_values("date").groupby("code").tail(1).set_index("code")
+    cand = []
+    for p in picks:
+        code = str(p["code"])
+        if code not in last.index:
+            continue
+        close = float(last.loc[code, "close"])
+        pct = p.get("pct") or 0.0
+        if pct >= 9.5:                       # 疑似涨停，买不进
+            continue
+        amount = float(last.loc[code, "amount"]) if "amount" in last.columns else 0.0
+        if amount < min_amount:              # 流动性不足
+            continue
+        if close * 100 > per_stock_budget:   # 一手都买不起
+            continue
+        cand.append({**p, "close": round(close, 2),
+                     "amount_wan": round(amount / 1e4)})
+    out, used_ind = [], {}
+    for p in cand:                           # 第一轮：每行业最多 1 只
+        ind = p.get("industry", "")
+        if ind in used_ind:
+            continue
+        out.append(p)
+        used_ind[ind] = 1
+        if len(out) >= top_n:
+            break
+    if len(out) < top_n:                     # 第二轮：允许补仓，但同行业最多 2 只
+        for p in cand:
+            if p not in out:
+                ind = p.get("industry", "")
+                if used_ind.get(ind, 0) >= 2:
+                    continue
+                out.append(p)
+                used_ind[ind] = used_ind.get(ind, 0) + 1
+                if len(out) >= top_n:
+                    break
+    return out[:top_n]
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--update", action="store_true", help="先更新行情数据")
@@ -225,6 +273,25 @@ def main() -> None:
     log("生成今日选股...")
     picks = latest_picks(scores, piped, daily, sector, pool_by_month,
                          args.top, use_quality=not args.no_quality)
+    # 估值信息（PE/PB/总市值）——失败不影响选股
+    val_map = {}
+    try:
+        val = ff.fetch_current_valuation()
+        if val is not None and len(val) > 0:
+            val_map = val.set_index("code").to_dict("index")
+    except Exception as e:
+        log(f"[WARN] 估值快照获取失败: {e}")
+    for p in picks:
+        v = val_map.get(str(p["code"]))
+        p["pe"] = round(float(v["pe"]), 1) if v and v.get("pe") and float(v["pe"]) > 0 else None
+        p["pb"] = round(float(v["pb"]), 2) if v and v.get("pb") and float(v["pb"]) > 0 else None
+        p["mv_yi"] = round(float(v["total_mv"]) / 1e8, 0) if v and v.get("total_mv") else None
+    small = small_capital_picks(
+        picks, daily,
+        top_n=cfg.portfolio.small_capital_top,
+        per_stock_budget=cfg.portfolio.small_capital_budget / max(1, cfg.portfolio.small_capital_top),
+        min_amount=cfg.portfolio.small_min_amount)
+    log(f"小资金 Top {len(small)}: {[p['name'] for p in small]}")
     tracking.record_picks(picks, OUT_DIR)
     log("评估历史选股表现...")
     weekly = tracking.evaluate_picks(daily, bench300, index500, OUT_DIR)
@@ -250,6 +317,7 @@ def main() -> None:
         "factors": factors,
         "weights": {FACTOR_DEFS.get(k, k): round(float(w), 3)
                     for k, w in weights.items()},
+        "small_picks": small,
         "weekly": weekly,
         "error": None,
     }
