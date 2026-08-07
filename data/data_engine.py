@@ -16,6 +16,7 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime
 from typing import List, Optional
 
+import numpy as np
 import pandas as pd
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -219,12 +220,19 @@ class DataEngine:
         if daily is not None and len(daily) > 0:
             daily["code"] = daily["code"].astype(str).str.zfill(6)
             daily["date"] = pd.to_datetime(daily["date"])
-            if "name" not in daily.columns:
+            # 增量新行可能没有股票名：补上（用最新成分股名称）
+            if "name" not in daily.columns or daily["name"].isna().any() \
+                    or (daily["name"].astype(str).str.strip() == "").any():
+                if "name" not in daily.columns:
+                    daily["name"] = ""
+                daily["name"] = daily["name"].replace("", np.nan)
                 try:
                     uni = self.get_universe(date=None)
-                    daily = daily.merge(uni[["code", "name"]], on="code", how="left")
+                    nm = uni.set_index("code")["name"]
+                    daily["name"] = daily["name"].fillna(daily["code"].map(nm))
                 except Exception:
-                    daily["name"] = ""
+                    pass
+                daily["name"] = daily["name"].fillna("")
             self._save("daily.parquet", daily)
             _log(f"保存完成: {len(daily)} 行, {daily['code'].nunique()} 只")
         return daily
