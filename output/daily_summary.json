@@ -1,6 +1,6 @@
 {
-  "date": "2026-08-19",
-  "data_date": "2026-08-19",
+  "date": "2026-08-20",
+  "data_date": "2026-08-20",
   "picks": [
     {
       "rank": 1,
@@ -67,8 +67,8 @@
       "code": "001221",
       "name": "悍高集团",
       "score": 1.385,
-      "close": 41.89,
-      "pct": 0.31,
+      "close": 43.59,
+      "pct": 4.06,
       "industry": "轻工制造",
       "pe": null,
       "pb": null,
@@ -484,18 +484,18 @@
     }
   ],
   "backtest": {
-    "annual_return": 14.05,
+    "annual_return": 14.06,
     "sharpe": 0.65,
     "max_drawdown": -31.48,
     "monthly_win_rate": 55.3,
     "benchmark_return": 41.34,
-    "excess_return": 129.75,
-    "info_ratio": 0.859,
-    "total_return": 171.09
+    "excess_return": 130.06,
+    "info_ratio": 0.861,
+    "total_return": 171.39
   },
   "pool_bench": {
     "benchmark_return": 180.71,
-    "excess_return": -9.63,
+    "excess_return": -9.32,
     "info_ratio": 0.014
   },
   "factors": [
@@ -518,8 +518,8 @@
     {
       "factor": "f_vwap_bias20",
       "name": "VWAP乖离",
-      "ic": -0.0339,
-      "t": -3.51,
+      "ic": -0.034,
+      "t": -3.52,
       "win": 34.0,
       "significant": true
     },
@@ -534,7 +534,7 @@
     {
       "factor": "f_vp_corr20",
       "name": "量价相关(20)",
-      "ic": -0.0218,
+      "ic": -0.0219,
       "t": -2.96,
       "win": 35.9,
       "significant": true
@@ -659,34 +659,34 @@
       "code": "001221",
       "name": "悍高集团",
       "score": 1.385,
-      "close": 41.89,
-      "pct": 0.31,
+      "close": 43.59,
+      "pct": 4.06,
       "industry": "轻工制造",
       "pe": null,
       "pb": null,
       "mv_yi": null,
-      "amount_wan": 18975
+      "amount_wan": 25122
     }
   ],
   "weekly": [
     {
-      "pick_date": "2026-08-12",
-      "eval_date": "2026-08-19",
+      "pick_date": "2026-08-13",
+      "eval_date": "2026-08-20",
       "n": 40,
-      "avg_return": -2.16,
-      "win_rate": 27.5,
+      "avg_return": -1.01,
+      "win_rate": 37.5,
       "best": [
-        "中谷物流",
-        6.1
+        "科沃斯",
+        8.26
       ],
       "worst": [
         "大金重工",
-        -11.02
+        -8.77
       ],
       "bench300": 0.0,
       "bench500": 0.0,
-      "excess300": -2.16,
-      "excess500": -2.16
+      "excess300": -1.01,
+      "excess500": -1.01
     }
   ],
   "error": null
